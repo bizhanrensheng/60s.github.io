@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>每日60秒</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        #image-container {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin: 20px auto;
+            width: 80%;
+            max-width: 600px;
+        }
+        #loading {
+            display: none;
+            font-size: 16px;
+            color: #888;
+        }
+        img {
+            width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>每日60秒</h1>
+    <div id="loading">图片加载中...</div>
+    <div id="image-container">
+        <img id="api-image" src="" alt="图片将显示在这里">
+    </div>
+
+    <script>
+        const apiUrl = 'https://qtkj.love/api/60s.php';
+        const imageContainer = document.getElementById('image-container');
+        const loading = document.getElementById('loading');
+        const apiImage = document.getElementById('api-image');
+
+        async function fetchImage() {
+            loading.style.display = 'block';
+            try {
+                // 更新图片源
+                apiImage.src = apiUrl;
+            } catch (error) {
+                imageContainer.textContent = '加载图片失败，请稍后重试。';
+                console.error('请求失败:', error);
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        // 初次加载
+        fetchImage();
+
+        // 每60秒刷新图片
+        setInterval(fetchImage, 60000);
+    </script>
+</body>
+</html>
